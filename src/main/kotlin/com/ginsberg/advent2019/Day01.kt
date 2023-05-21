@@ -14,10 +14,10 @@ class Day01(input: List<String>) {
     private val modules: List<Int> = input.map { it.toInt() }
 
     fun solvePart1(): Int =
-        modules.sumBy { it.fuel() }
+        modules.sumOf { it.fuel() }
 
     fun solvePart2(): Int =
-        modules.sumBy { it.fuelWithFuel() }
+        modules.sumOf { it.fuelWithFuel() }
 
     private fun Int.fuel(): Int = (this / 3) - 2
 
