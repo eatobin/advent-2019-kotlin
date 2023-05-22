@@ -33,7 +33,7 @@ class Day01Test {
             val answer = Day01(Resources.resourceAsList("day1.txt")).solvePart1()
 
             // Then
-            assertThat(answer).isEqualTo(3_223_398)
+            assertThat(answer).isEqualTo(3_337_766)
         }
     }
 
@@ -55,7 +55,7 @@ class Day01Test {
             val answer = Day01(Resources.resourceAsList("day1.txt")).solvePart2()
 
             // Then
-            assertThat(answer).isEqualTo(4_832_253)
+            assertThat(answer).isEqualTo(5_003_788)
         }
     }
 }

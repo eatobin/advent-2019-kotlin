@@ -13,8 +13,7 @@ class Day02(input: String) {
 
     private val memory: IntArray = input.split(",").map { it.toInt() }.toIntArray()
 
-    fun solvePart1(noun: Int = memory[1], verb: Int = memory[2]): Int =
-        runProgram(memory, noun, verb)
+    fun solvePart1(noun: Int = memory[1], verb: Int = memory[2]): Int = runProgram(memory, noun, verb)
 
     fun solvePart2(target: Int = 19_690_720): Int {
         (0..99).forEach { noun ->
@@ -47,7 +46,6 @@ class Day02(input: String) {
         this[this[at]] = value
     }
 
-    private fun IntArray.getRef(at: Int): Int =
-        this[this[at]]
+    private fun IntArray.getRef(at: Int): Int = this[this[at]]
 
 }

@@ -13,19 +13,16 @@ class Day01(input: List<String>) {
 
     private val modules: List<Int> = input.map { it.toInt() }
 
-    fun solvePart1(): Int =
-        modules.sumOf { it.fuel() }
+    fun solvePart1(): Int = modules.sumOf { it.fuel() }
 
-    fun solvePart2(): Int =
-        modules.sumOf { it.fuelWithFuel() }
+    fun solvePart2(): Int = modules.sumOf { it.fuelWithFuel() }
 
     private fun Int.fuel(): Int = (this / 3) - 2
 
-    private fun Int.fuelWithFuel(): Int =
-        if(this < 9)  {
-            0
-        } else {
-            val fuel = this.fuel()
-            fuel + fuel.fuelWithFuel()
-        }
+    private fun Int.fuelWithFuel(): Int = if (this < 9) {
+        0
+    } else {
+        val fuel = this.fuel()
+        fuel + fuel.fuelWithFuel()
+    }
 }
