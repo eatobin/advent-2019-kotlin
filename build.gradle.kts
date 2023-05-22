@@ -20,8 +20,8 @@ repositories {
 }
 
 dependencies {
-    testApi("org.junit.jupiter:junit-jupiter-engine:5.5.2")
-    testImplementation("org.assertj:assertj-core:3.11.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.3")
+    testImplementation("org.assertj:assertj-core:3.24.2")
 }
 
 tasks.named<Test>("test") {
