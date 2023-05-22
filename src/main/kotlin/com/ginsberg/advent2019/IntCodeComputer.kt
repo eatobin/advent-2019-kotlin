@@ -11,8 +11,8 @@ import kotlinx.coroutines.channels.toList
 import kotlinx.coroutines.runBlocking
 import kotlin.math.pow
 
-class IntCodeComputer(private val program: IntArray,
-                      val input: Channel<Int>
+class IntCodeComputer(
+    private val program: IntArray, val input: Channel<Int>
 ) {
 
     val output: Channel<Int> = Channel(Channel.UNLIMITED)
@@ -72,7 +72,9 @@ sealed class IntCodeInstruction(internal val nextInstructionOffset: Int) {
     abstract suspend fun execute(pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>): Int
 
     object Add : IntCodeInstruction(4) {
-        override suspend fun execute(pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>): Int {
+        override suspend fun execute(
+            pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>
+        ): Int {
             val writeTo = program[pointer + 3]
             program[writeTo] = program.param(1, pointer) + program.param(2, pointer)
             return nextInstructionOffset
@@ -80,7 +82,9 @@ sealed class IntCodeInstruction(internal val nextInstructionOffset: Int) {
     }
 
     object Multiply : IntCodeInstruction(4) {
-        override suspend fun execute(pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>): Int {
+        override suspend fun execute(
+            pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>
+        ): Int {
             val writeTo = program[pointer + 3]
             program[writeTo] = program.param(1, pointer) * program.param(2, pointer)
             return nextInstructionOffset
@@ -88,7 +92,9 @@ sealed class IntCodeInstruction(internal val nextInstructionOffset: Int) {
     }
 
     object Input : IntCodeInstruction(2) {
-        override suspend fun execute(pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>): Int {
+        override suspend fun execute(
+            pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>
+        ): Int {
             val writeTo = program[pointer + 1]
             program[writeTo] = input.receive()
             return nextInstructionOffset
@@ -96,14 +102,18 @@ sealed class IntCodeInstruction(internal val nextInstructionOffset: Int) {
     }
 
     object Output : IntCodeInstruction(2) {
-        override suspend fun execute(pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>): Int {
+        override suspend fun execute(
+            pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>
+        ): Int {
             output.send(program.param(1, pointer))
             return nextInstructionOffset
         }
     }
 
     object JumpIfTrue : IntCodeInstruction(3) {
-        override suspend fun execute(pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>): Int {
+        override suspend fun execute(
+            pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>
+        ): Int {
             val a = program.param(1, pointer)
             val b = program.param(2, pointer)
             return if (a != 0) b - pointer else nextInstructionOffset
@@ -111,7 +121,9 @@ sealed class IntCodeInstruction(internal val nextInstructionOffset: Int) {
     }
 
     object JumpIfFalse : IntCodeInstruction(3) {
-        override suspend fun execute(pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>): Int {
+        override suspend fun execute(
+            pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>
+        ): Int {
             val a = program.param(1, pointer)
             val b = program.param(2, pointer)
             return if (a == 0) b - pointer else nextInstructionOffset
@@ -119,7 +131,9 @@ sealed class IntCodeInstruction(internal val nextInstructionOffset: Int) {
     }
 
     object LessThan : IntCodeInstruction(4) {
-        override suspend fun execute(pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>): Int {
+        override suspend fun execute(
+            pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>
+        ): Int {
             val writeTo = program[pointer + 3]
             program[writeTo] = if (program.param(1, pointer) < program.param(2, pointer)) 1 else 0
             return nextInstructionOffset
@@ -127,7 +141,9 @@ sealed class IntCodeInstruction(internal val nextInstructionOffset: Int) {
     }
 
     object Equals : IntCodeInstruction(4) {
-        override suspend fun execute(pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>): Int {
+        override suspend fun execute(
+            pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>
+        ): Int {
             val writeTo = program[pointer + 3]
             program[writeTo] = if (program.param(1, pointer) == program.param(2, pointer)) 1 else 0
             return nextInstructionOffset
@@ -135,20 +151,20 @@ sealed class IntCodeInstruction(internal val nextInstructionOffset: Int) {
     }
 
     object Halt : IntCodeInstruction(1) {
-        override suspend fun execute(pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>): Int = 0
+        override suspend fun execute(
+            pointer: Int, program: IntArray, input: ReceiveChannel<Int>, output: Channel<Int>
+        ): Int = 0
     }
 
     internal fun IntArray.param(paramNo: Int, offset: Int): Int =
         this.getRef(this[offset].toParameterMode(paramNo), offset + paramNo)
 
-    private fun Int.toParameterMode(pos: Int): Int =
-        this / (10.0.pow(pos + 1).toInt()) % 10
+    private fun Int.toParameterMode(pos: Int): Int = this / (10.0.pow(pos + 1).toInt()) % 10
 
-    private fun IntArray.getRef(mode: Int, at: Int): Int =
-        when (mode) {
-            0 -> this[this[at]]
-            1 -> this[at]
-            else -> throw IllegalArgumentException("Unknown mode: $mode")
-        }
+    private fun IntArray.getRef(mode: Int, at: Int): Int = when (mode) {
+        0 -> this[this[at]]
+        1 -> this[at]
+        else -> throw IllegalArgumentException("Unknown mode: $mode")
+    }
 
 }

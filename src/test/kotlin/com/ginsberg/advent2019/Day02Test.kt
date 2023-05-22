@@ -31,13 +31,13 @@ class Day02Test {
         @Test
         fun `Actual answer`() {
             // Given
-            val input = Resources.resourceAsString("day2.txt")
+            val input = Resources.resourceAsString("day2.csv")
 
             // When
             val answer = Day02(input).solvePart1(12, 2)
 
             // Then
-            assertThat(answer).isEqualTo(5_110_675)
+            assertThat(answer).isEqualTo(2_890_696)
         }
     }
 
@@ -48,13 +48,13 @@ class Day02Test {
         @Test
         fun `Actual answer`() {
             // Given
-            val input = Resources.resourceAsString("day2.txt")
+            val input = Resources.resourceAsString("day2.csv")
 
             // When
             val answer = Day02(input).solvePart2()
 
             // Then
-            assertThat(answer).isEqualTo(4_847)
+            assertThat(answer).isEqualTo(8_226)
         }
     }
 
@@ -66,26 +66,26 @@ class Day02Test {
         @DisplayName("Part 1")
         fun `Actual answer Part 1`() {
             // Given
-            val input = Resources.resourceAsString("day2.txt")
+            val input = Resources.resourceAsString("day2.csv")
 
             // When
             val answer = Day02IntCode(input).solvePart1(12, 2)
 
             // Then
-            assertThat(answer).isEqualTo(5_110_675)
+            assertThat(answer).isEqualTo(2_890_696)
         }
 
         @Test
         @DisplayName("Part 2")
         fun `Actual answer Part 2`() {
             // Given
-            val input = Resources.resourceAsString("day2.txt")
+            val input = Resources.resourceAsString("day2.csv")
 
             // When
             val answer = Day02IntCode(input).solvePart2()
 
             // Then
-            assertThat(answer).isEqualTo(4_847)
+            assertThat(answer).isEqualTo(8_226)
         }
     }
 }
