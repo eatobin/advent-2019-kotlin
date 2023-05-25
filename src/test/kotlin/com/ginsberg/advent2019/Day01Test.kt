@@ -14,6 +14,7 @@ class Day01Test {
 
     // Given
     private val inputs = listOf("12", "14", "1969", "100756")
+    fun Int.triple(): Int = this * 3
 
     @Nested
     @DisplayName("Part 1")
@@ -34,6 +35,11 @@ class Day01Test {
 
             // Then
             assertThat(answer).isEqualTo(3_337_766)
+        }
+
+        @Test
+        fun `Eric stuff`() {
+            assertThat(3.triple()).isEqualTo(9)
         }
     }
 

@@ -25,4 +25,6 @@ class Day01(input: List<String>) {
         val fuel = this.fuel()
         fuel + fuel.fuelWithFuel()
     }
+
+
 }
