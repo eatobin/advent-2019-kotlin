@@ -17,6 +17,8 @@ class Day01(input: List<String>) {
 
     fun solvePart2(): Int = modules.sumOf { it.fuelWithFuel() }
 
+    fun solvePart2EAT(): Int = modules.sumOf { it.ericFuel() }
+
     private fun Int.fuel(): Int = (this / 3) - 2
 
     private fun Int.fuelWithFuel(): Int = if (this < 9) {
@@ -26,5 +28,15 @@ class Day01(input: List<String>) {
         fuel + fuel.fuelWithFuel()
     }
 
-
+    private fun Int.ericFuel(): Int {
+        tailrec fun fuelAccumulator(mass: Int, accum: Int): Int {
+            val newFuel: Int = mass.fuel()
+            return if (newFuel > 0) {
+                fuelAccumulator(mass = newFuel, accum = accum + newFuel)
+            } else {
+                accum
+            }
+        }
+        return fuelAccumulator(mass = this, accum = 0)
+    }
 }

@@ -63,5 +63,14 @@ class Day01Test {
             // Then
             assertThat(answer).isEqualTo(5_003_788)
         }
+
+        @Test
+        fun `Eric Actual answer`() {
+            // When
+            val answer = Day01(Resources.resourceAsList("day1.txt")).solvePart2EAT()
+
+            // Then
+            assertThat(answer).isEqualTo(5_003_788)
+        }
     }
 }
